@@ -22,6 +22,10 @@ android {
         }
     }
     namespace = "me.chenhe.lib.wearmsger.demo"
+
+    kotlin {
+        jvmToolchain(21)
+    }
 }
 
 dependencies {
