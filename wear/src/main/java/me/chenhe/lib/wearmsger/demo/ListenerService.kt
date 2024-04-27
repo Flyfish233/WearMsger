@@ -19,9 +19,7 @@ internal class ListenerService : WMListenerService() {
             // Response the both way request
             lifecycleScope.launch {
                 BothWayHub.response(
-                    this@ListenerService,
-                    messageEvent,
-                    "Hello!"
+                    this@ListenerService, messageEvent, "Hello!"
                 )
             }
         } else if (messageEvent.path == "/msg/request_data") {

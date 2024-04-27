@@ -9,14 +9,12 @@ interface DataListener {
     @MainThread
     fun preProcessChanged(dataMapItem: DataMapItem) {
         // 过滤掉 BothWay 的响应，其应当交给对应的 Callback 处理。
-        if (dataMapItem.uri.path?.startsWith("$WMRE/") == false)
-            onDataChanged(dataMapItem)
+        if (dataMapItem.uri.path?.startsWith("$WMRE/") == false) onDataChanged(dataMapItem)
     }
 
     @MainThread
     fun preProcessDeleted(uri: Uri) {
-        if (uri.path?.startsWith("$WMRE/") == false)
-            onDataDeleted(uri)
+        if (uri.path?.startsWith("$WMRE/") == false) onDataDeleted(uri)
     }
 
     @MainThread

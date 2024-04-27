@@ -15,9 +15,7 @@ interface BothWayCallback {
     val responseNodeId: String?
 
     enum class Result {
-        OK,
-        REQUEST_FAIL,
-        TIMEOUT
+        OK, REQUEST_FAIL, TIMEOUT
     }
 
     @Suppress("unused")

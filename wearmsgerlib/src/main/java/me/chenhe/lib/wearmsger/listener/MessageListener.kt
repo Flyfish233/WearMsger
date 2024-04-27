@@ -8,8 +8,7 @@ interface MessageListener {
     @MainThread
     fun preProcess(event: MessageEvent) {
         // 过滤掉 BothWay 的响应，其应当交给对应的 Callback 处理。
-        if (!event.path.startsWith("$WMRE/"))
-            onMessageReceived(event)
+        if (!event.path.startsWith("$WMRE/")) onMessageReceived(event)
     }
 
     @MainThread

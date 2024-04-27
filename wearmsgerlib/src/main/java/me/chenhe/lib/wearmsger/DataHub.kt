@@ -27,26 +27,19 @@ object DataHub {
     }
 
     suspend fun deleteData(
-        context: Context,
-        uri: Uri,
-        timeout: Long = SEND_TIMEOUT
+        context: Context, uri: Uri, timeout: Long = SEND_TIMEOUT
     ): Result {
         return getClient().deleteData(context, uri, timeout)
     }
 
     suspend fun deleteData(
-        context: Context,
-        path: String,
-        timeout: Long = SEND_TIMEOUT
+        context: Context, path: String, timeout: Long = SEND_TIMEOUT
     ): Result {
         return getClient().deleteData(context, Uri.parse("wear:$path"), timeout)
     }
 
     fun addDataListener(
-        context: Context,
-        listener: DataListener,
-        uri: Uri? = null,
-        literal: Boolean = false
+        context: Context, listener: DataListener, uri: Uri? = null, literal: Boolean = false
     ) {
         getClient().addDataListener(context, listener, uri, literal)
     }
@@ -56,9 +49,7 @@ object DataHub {
     }
 
     suspend fun getInputStreamForAsset(
-        context: Context,
-        asset: Asset,
-        timeout: Long = SEND_TIMEOUT
+        context: Context, asset: Asset, timeout: Long = SEND_TIMEOUT
     ): InputStream? {
         return getClient().getInputStreamForAsset(context, asset, timeout)
     }

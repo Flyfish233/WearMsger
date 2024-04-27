@@ -1,6 +1,10 @@
 package me.chenhe.lib.wearmsger.service
 
-import com.google.android.gms.wearable.*
+import com.google.android.gms.wearable.DataEvent
+import com.google.android.gms.wearable.DataEventBuffer
+import com.google.android.gms.wearable.DataMapItem
+import com.google.android.gms.wearable.MessageEvent
+import com.google.android.gms.wearable.WearableListenerService
 import java.util.concurrent.CountDownLatch
 
 /**
@@ -38,6 +42,7 @@ internal class GmsListenerAgentService : WearableListenerService(), ListenerAgen
                 DataEvent.TYPE_CHANGED -> delegateOnDataChanged(
                     DataMapItem.fromDataItem(event.dataItem)
                 )
+
                 DataEvent.TYPE_DELETED -> delegateOnDataDeleted(
                     DataMapItem.fromDataItem(event.dataItem)
                 )

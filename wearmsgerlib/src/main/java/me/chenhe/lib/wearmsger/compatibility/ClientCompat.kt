@@ -21,21 +21,13 @@ internal interface ClientCompat {
 
     @Suppress("unused")
     suspend fun sendMessage(
-        context: Context,
-        nodeId: String,
-        path: String,
-        data: String,
-        timeout: Long
+        context: Context, nodeId: String, path: String, data: String, timeout: Long
     ): Result {
         return sendMessage(context, nodeId, path, data.toByteArray(), timeout)
     }
 
     suspend fun sendMessage(
-        context: Context,
-        nodeId: String,
-        path: String,
-        data: ByteArray,
-        timeout: Long
+        context: Context, nodeId: String, path: String, data: ByteArray, timeout: Long
     ): Result
 
     /**
@@ -44,10 +36,7 @@ internal interface ClientCompat {
     suspend fun getNodesId(context: Context): List<String>?
 
     fun addMessageListener(
-        context: Context,
-        listener: MessageListener,
-        uri: Uri? = null,
-        literal: Boolean = false
+        context: Context, listener: MessageListener, uri: Uri? = null, literal: Boolean = false
     )
 
     fun removeMessageListener(context: Context, listener: MessageListener)
@@ -55,30 +44,20 @@ internal interface ClientCompat {
     ///////////////////////////////////////////////////////////////////////////////////// data
 
     suspend fun putData(
-        context: Context,
-        putDataMapRequest: PutDataMapRequest,
-        timeout: Long,
-        withId: Boolean
+        context: Context, putDataMapRequest: PutDataMapRequest, timeout: Long, withId: Boolean
     ): Result
 
     suspend fun deleteData(
-        context: Context,
-        uri: Uri,
-        timeout: Long
+        context: Context, uri: Uri, timeout: Long
     ): Result
 
     fun addDataListener(
-        context: Context,
-        listener: DataListener,
-        uri: Uri? = null,
-        literal: Boolean = false
+        context: Context, listener: DataListener, uri: Uri? = null, literal: Boolean = false
     )
 
     fun removeDataListener(context: Context, listener: DataListener)
 
     suspend fun getInputStreamForAsset(
-        context: Context,
-        asset: Asset,
-        timeout: Long
+        context: Context, asset: Asset, timeout: Long
     ): InputStream?
 }

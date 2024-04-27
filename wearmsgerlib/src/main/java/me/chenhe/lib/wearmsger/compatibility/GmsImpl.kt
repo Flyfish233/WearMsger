@@ -2,7 +2,13 @@ package me.chenhe.lib.wearmsger.compatibility
 
 import android.content.Context
 import android.net.Uri
-import com.google.android.gms.wearable.*
+import com.google.android.gms.wearable.Asset
+import com.google.android.gms.wearable.DataClient
+import com.google.android.gms.wearable.DataEvent
+import com.google.android.gms.wearable.DataMapItem
+import com.google.android.gms.wearable.MessageClient
+import com.google.android.gms.wearable.PutDataMapRequest
+import com.google.android.gms.wearable.Wearable
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -23,8 +29,7 @@ internal object GmsImpl : ClientCompat {
     private val listeners: MutableMap<Any, Any> by lazy { mutableMapOf() }
 
     override fun removeAllListeners(context: Context) {
-        if (listeners.isEmpty())
-            return
+        if (listeners.isEmpty()) return
         val d = Wearable.getDataClient(context)
         val m = Wearable.getMessageClient(context)
         for ((k, v) in listeners) {
@@ -43,11 +48,7 @@ internal object GmsImpl : ClientCompat {
     }
 
     override suspend fun sendMessage(
-        context: Context,
-        nodeId: String,
-        path: String,
-        data: ByteArray,
-        timeout: Long
+        context: Context, nodeId: String, path: String, data: ByteArray, timeout: Long
     ): Result = try {
         Result.ok(Wearable.getMessageClient(context).sendMessage(nodeId, path, data).await())
     } catch (e: CancellationException) {
@@ -66,10 +67,7 @@ internal object GmsImpl : ClientCompat {
     }
 
     override fun addMessageListener(
-        context: Context,
-        listener: MessageListener,
-        uri: Uri?,
-        literal: Boolean
+        context: Context, listener: MessageListener, uri: Uri?, literal: Boolean
     ) {
         val upstream = MessageClient.OnMessageReceivedListener { event ->
             listener.preProcess(event)
@@ -93,10 +91,7 @@ internal object GmsImpl : ClientCompat {
     }
 
     override suspend fun putData(
-        context: Context,
-        putDataMapRequest: PutDataMapRequest,
-        timeout: Long,
-        withId: Boolean
+        context: Context, putDataMapRequest: PutDataMapRequest, timeout: Long, withId: Boolean
     ): Result = try {
         var id = 0L
         if (withId) {
@@ -115,9 +110,7 @@ internal object GmsImpl : ClientCompat {
      * 若成功，则 [Result.requestId] 表示已删除的项目个数。
      */
     override suspend fun deleteData(
-        context: Context,
-        uri: Uri,
-        timeout: Long
+        context: Context, uri: Uri, timeout: Long
     ): Result = try {
         val num = Wearable.getDataClient(context).deleteDataItems(uri).await()
         Result.ok(num)
@@ -128,18 +121,22 @@ internal object GmsImpl : ClientCompat {
     }
 
     override fun addDataListener(
-        context: Context,
-        listener: DataListener,
-        uri: Uri?,
-        literal: Boolean
+        context: Context, listener: DataListener, uri: Uri?, literal: Boolean
     ) {
         val upstream = DataClient.OnDataChangedListener { buffer ->
             for (event in buffer) {
                 when (event.type) {
-                    DataEvent.TYPE_CHANGED ->
-                        listener.preProcessChanged(DataMapItem.fromDataItem(event.dataItem))
-                    DataEvent.TYPE_DELETED ->
-                        listener.preProcessDeleted(DataMapItem.fromDataItem(event.dataItem).uri)
+                    DataEvent.TYPE_CHANGED -> listener.preProcessChanged(
+                        DataMapItem.fromDataItem(
+                            event.dataItem
+                        )
+                    )
+
+                    DataEvent.TYPE_DELETED -> listener.preProcessDeleted(
+                        DataMapItem.fromDataItem(
+                            event.dataItem
+                        ).uri
+                    )
                 }
             }
         }
@@ -162,9 +159,7 @@ internal object GmsImpl : ClientCompat {
     }
 
     override suspend fun getInputStreamForAsset(
-        context: Context,
-        asset: Asset,
-        timeout: Long
+        context: Context, asset: Asset, timeout: Long
     ): InputStream? = withContext(Dispatchers.IO) {
         try {
             Wearable.getDataClient(context).getFdForAsset(asset).await().inputStream

@@ -47,9 +47,7 @@ object MessageHub {
         getClient().getNodesId(context)?.forEach { nodeId ->
             sendMessage(context, nodeId, path, data, timeout).let { r ->
                 if (r.result != Result.RESULT_OK) {
-                    if (failResult != null) {
-                        failResult = r
-                    }
+                    failResult = r
                 } else if (requestId == 0L) {
                     requestId = r.requestId
                 }

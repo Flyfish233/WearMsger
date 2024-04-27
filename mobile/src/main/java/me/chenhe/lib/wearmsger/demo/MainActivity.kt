@@ -71,9 +71,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun sendMessage() {
         lifecycleScope.launch {
             val mr = MessageHub.sendMessage(
-                ctx,
-                "/msg/test",
-                et.text.toString()
+                ctx, "/msg/test", et.text.toString()
             )
             Log.i("SendMsg", mr.toString())
         }
@@ -105,11 +103,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         override fun parseResult(resultCode: Int, intent: Intent?): Bitmap? {
-            if (resultCode != RESULT_OK || intent == null)
-                return null
+            if (resultCode != RESULT_OK || intent == null) return null
             val data = intent.extras?.get("data")
-            if (data == null || data !is Bitmap)
-                return null
+            if (data == null || data !is Bitmap) return null
             return data
         }
     }
@@ -144,8 +140,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun delPhoto() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val r =
-                DataHub.deleteData(ctx, "/data/photo")
+            val r = DataHub.deleteData(ctx, "/data/photo")
             Log.i("DelPhoto", r.toString())
         }
     }
@@ -154,10 +149,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         tvResponse.text = "Waiting for response..."
         lifecycleScope.launch(Dispatchers.IO) {
             val r = BothWayHub.requestForMessage(
-                ctx,
-                null,
-                "/msg/request",
-                et.text.toString()
+                ctx, null, "/msg/request", et.text.toString()
             )
             withContext(Dispatchers.Main) {
                 if (r.isSuccess()) {

@@ -43,7 +43,7 @@ object BothWayHub {
         nodeId: String?,
         path: String,
         data: ByteArray,
-        timeout: Long = WM.bothWayTimeout
+        timeout: Long = bothWayTimeout
     ): MessageCallback {
         val r = withTimeoutOrNull(timeout) {
             val send = if (nodeId == null) {
@@ -89,7 +89,7 @@ object BothWayHub {
         nodeId: String?,
         path: String,
         data: String,
-        timeout: Long = WM.bothWayTimeout
+        timeout: Long = bothWayTimeout
     ): MessageCallback =
         requestForMessage(context, nodeId, path, data.toByteArray(Charset.forName("utf8")), timeout)
 
@@ -138,7 +138,7 @@ object BothWayHub {
         nodeId: String?,
         path: String,
         data: ByteArray,
-        timeout: Long = WM.bothWayTimeout
+        timeout: Long = bothWayTimeout
     ): DataCallback {
         val r = withTimeoutOrNull(timeout) {
             val send = if (nodeId == null) {
@@ -191,7 +191,7 @@ object BothWayHub {
         nodeId: String?,
         path: String,
         data: String,
-        timeout: Long = WM.bothWayTimeout
+        timeout: Long = bothWayTimeout
     ): DataCallback =
         requestForData(context, nodeId, path, data.toByteArray(Charset.forName("utf8")), timeout)
 
@@ -235,7 +235,7 @@ object BothWayHub {
     suspend fun requestForMessage(
         context: Context,
         putDataMapRequest: PutDataMapRequest,
-        timeout: Long = WM.bothWayTimeout
+        timeout: Long = bothWayTimeout
     ): MessageCallback {
         val r = withTimeoutOrNull(timeout) {
             putDataMapRequest.setUrgent()

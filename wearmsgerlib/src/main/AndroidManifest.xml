@@ -1,9 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <queries>
-        <package android:name="com.google.android.gms" />
-        <package android:name="com.google.android.wearable.app" />
-        <package android:name="com.google.android.wearable.app.cn" />
-    </queries>
-
-</manifest>
+<manifest />
