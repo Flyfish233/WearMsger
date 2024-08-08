@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 35
     namespace = "me.chenhe.lib.wearmsger"
 
     defaultConfig {
@@ -29,14 +29,12 @@ android {
 }
 
 dependencies {
-    implementation(fileTree("libs") { include("*.jar") })
-
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.core:core-ktx:1.13.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.0")
-    api("androidx.lifecycle:lifecycle-service:2.7.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
-    implementation("com.google.android.gms:play-services-wearable:18.1.0")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("androidx.core:core-ktx:1.13.1")
+    api("androidx.lifecycle:lifecycle-service:2.8.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+    implementation("com.google.android.gms:play-services-wearable:18.2.0")
 }
 
 mavenPublishing {
