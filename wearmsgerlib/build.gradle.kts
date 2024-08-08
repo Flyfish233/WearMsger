@@ -37,7 +37,9 @@ dependencies {
     implementation("com.google.android.gms:play-services-wearable:18.2.0")
 }
 
+/*
 mavenPublishing {
     publishToMavenCentral(com.vanniktech.maven.publish.SonatypeHost.S01)
     signAllPublications()
 }
+**/
