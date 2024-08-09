@@ -23,34 +23,34 @@ object DataHub {
         timeout: Long = SEND_TIMEOUT,
         withId: Boolean = false
     ): Result {
-        return getClient().putData(context, putDataMapRequest, timeout, withId)
+        return client.putData(context, putDataMapRequest, timeout, withId)
     }
 
     suspend fun deleteData(
         context: Context, uri: Uri, timeout: Long = SEND_TIMEOUT
     ): Result {
-        return getClient().deleteData(context, uri, timeout)
+        return client.deleteData(context, uri, timeout)
     }
 
     suspend fun deleteData(
         context: Context, path: String, timeout: Long = SEND_TIMEOUT
     ): Result {
-        return getClient().deleteData(context, Uri.parse("wear:$path"), timeout)
+        return client.deleteData(context, Uri.parse("wear:$path"), timeout)
     }
 
     fun addDataListener(
         context: Context, listener: DataListener, uri: Uri? = null, literal: Boolean = false
     ) {
-        getClient().addDataListener(context, listener, uri, literal)
+        client.addDataListener(context, listener, uri, literal)
     }
 
     fun removeDataListener(context: Context, listener: DataListener) {
-        getClient().removeDataListener(context, listener)
+        client.removeDataListener(context, listener)
     }
 
     suspend fun getInputStreamForAsset(
         context: Context, asset: Asset, timeout: Long = SEND_TIMEOUT
     ): InputStream? {
-        return getClient().getInputStreamForAsset(context, asset, timeout)
+        return client.getInputStreamForAsset(context, asset, timeout)
     }
 }

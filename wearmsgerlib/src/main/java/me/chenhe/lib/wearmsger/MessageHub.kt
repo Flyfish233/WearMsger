@@ -18,7 +18,7 @@ object MessageHub {
         data: ByteArray,
         timeout: Long = SEND_TIMEOUT
     ): Result {
-        return getClient().sendMessage(context, nodeId, path, data, timeout)
+        return client.sendMessage(context, nodeId, path, data, timeout)
     }
 
     suspend fun sendMessage(
@@ -28,7 +28,7 @@ object MessageHub {
         data: String,
         timeout: Long = SEND_TIMEOUT
     ): Result {
-        return getClient().sendMessage(context, nodeId, path, data, timeout)
+        return client.sendMessage(context, nodeId, path, data, timeout)
     }
 
     /**
@@ -44,7 +44,7 @@ object MessageHub {
     ): Result {
         var failResult: Result? = null
         var requestId = 0L
-        getClient().getNodesId(context)?.forEach { nodeId ->
+        client.getNodesId(context)?.forEach { nodeId ->
             sendMessage(context, nodeId, path, data, timeout).let { r ->
                 if (r.result != Result.RESULT_OK) {
                     failResult = r
@@ -89,12 +89,12 @@ object MessageHub {
         uri: Uri? = null,
         literal: Boolean = false
     ) {
-        getClient().addMessageListener(context, listener, uri, literal)
+        client.addMessageListener(context, listener, uri, literal)
     }
 
     @Suppress("unused")
     fun removeMessageListener(context: Context, listener: MessageListener) {
-        getClient().removeMessageListener(context, listener)
+        client.removeMessageListener(context, listener)
     }
 
 }

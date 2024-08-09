@@ -25,9 +25,7 @@ internal const val DATA_ID_KEY = "WearMsger_ID"
  */
 internal const val WMRE = "/WMRE"
 
-internal fun getClient(): ClientCompat {
-    return GmsImpl
-}
+internal val client: ClientCompat = GmsImpl
 
 internal fun logd(tag: String, a: Any) {
     Log.d("WearMsger", "[$tag] $a")
