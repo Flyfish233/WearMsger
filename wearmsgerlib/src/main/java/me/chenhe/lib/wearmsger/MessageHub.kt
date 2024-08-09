@@ -3,6 +3,7 @@ package me.chenhe.lib.wearmsger
 import android.content.Context
 import android.net.Uri
 import me.chenhe.lib.wearmsger.bean.Result
+import me.chenhe.lib.wearmsger.bean.Result.Companion.failed
 import me.chenhe.lib.wearmsger.listener.MessageListener
 import java.nio.charset.Charset
 
@@ -44,17 +45,28 @@ object MessageHub {
     ): Result {
         var failResult: Result? = null
         var requestId = 0L
-        client.getNodesId(context)?.forEach { nodeId ->
-            sendMessage(context, nodeId, path, data, timeout).let { r ->
-                if (r.result != Result.RESULT_OK) {
-                    failResult = r
-                } else if (requestId == 0L) {
-                    requestId = r.requestId
+        try {
+            client.getNodesId(context)?.forEach { nodeId ->
+                sendMessage(context, nodeId, path, data, timeout).let { r ->
+                    if (r.result != Result.RESULT_OK) {
+                        failResult = r
+                    } else if (requestId == 0L) {
+                        requestId = r.requestId
+                    }
                 }
             }
+        } catch (e: Exception) {
+            /**
+             * Common exception:
+             * 1) The connection to Google Play services was lost due to service disconnection.
+             * 2) Wearable.API is not available on this device.
+             * For latter, install wear app and manually trigger once `sendMessage` on wear device.
+             */
+            return failed(e)
         }
         return failResult ?: Result(Result.RESULT_OK, requestId)
     }
+
 
     /**
      * 向所有节点发送 Message. 遇到发送失败会继续执行。

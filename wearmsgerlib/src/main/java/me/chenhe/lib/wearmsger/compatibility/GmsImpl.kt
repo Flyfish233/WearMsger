@@ -57,12 +57,12 @@ internal object GmsImpl : ClientCompat {
         Result.failed(e)
     }
 
-    override suspend fun getNodesId(context: Context): List<String>? = withContext(Dispatchers.IO) {
+    override suspend fun getNodesId(context: Context): List<String> = withContext(Dispatchers.IO) {
         try {
             Wearable.getNodeClient(context).connectedNodes.await().map { it.id }
         } catch (e: Exception) {
             logw(TAG, "Failed to get connected nodes.", e)
-            null
+            throw e  // 抛出异常
         }
     }
 
